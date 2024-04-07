@@ -1,0 +1,196 @@
+﻿@model dynamic
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="CodeHim">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a363edd0e0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <font-awesome-icon :icon="['far', 'arrow-up']" />
+    <FontAwesomeIcon icon="fa-duotone fa-arrow-up" />
+    <font-awesome-icon :icon="['fad', 'arrow-up']" />
+    <font-awesome-icon :icon="['far', 'arrow-up']" />
+    <FontAwesomeIcon icon="fa-duotone fa-arrow-up" />
+    <font-awesome-icon :icon="['fas', 'arrow-up']" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/cart.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/demo.css">
+
+</head>
+<body>
+    @{
+        float totalp = 0;
+    }
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="feature-banner header-text">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <main>
+                                            <div class="shopping-cart-wrapper">
+                                                <table cellpadding="10" class="table is-fullwidth ">
+                                                    <thead>
+
+
+                                                    <th>
+                                                        Game
+                                                    </th>
+                                                    <th>
+                                                        Type
+                                                    </th>
+                                                    <th>
+                                                        OS mode
+                                                    </th>
+                                                    <th>
+                                                        Price
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        @foreach (var item in Model.cart)
+                                                        {
+                                                            <tr class="cart-item">
+
+                                                                <td>
+                                                                    <div class="content">
+                                                                        @{
+                                                                            var base64 = Convert.ToBase64String(item.Game.Game_Images);
+                                                                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                        }
+                                                                        <img src="@imgsrc" style=" max-width: 25%; max-height: 170px" alt="" />
+
+                                                                    </div>
+                                                                    @item.Game.name
+
+                                                                </td>
+                                                                <td>
+                                                                    @item.Game.Category.Type
+
+                                                                </td>
+                                                                <td>
+                                                                    @item.Game.Os_mode
+                                                                </td>
+                                                                <td>
+                                                                    $@item.Game.price
+                                                                    @{
+                                                                        totalp += item.Game.price;
+                                                                    }
+                                                                </td>
+
+
+                                                                <td>
+                                                                    <a asp-action="Delete" asp-route-id="@item.Id">Remove</a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <h6>Toatl Price  </h6> <p style="color:aliceblue">@totalp </p>
+                                            <div class="main-button">
+                                                <a href="@Url.Action("check","Payment" )">Checkout </a>
+
+                                            </div>
+
+                                    </div>
+                                    </main>
+                                    <div class="col-lg-8">
+                                        </br>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="~/js/script.js"></script>
+    <style>
+
+        .col-lg-4 {
+            flex: 0 0 auto;
+            width: 176.333333%;
+        }
+
+        .ro {
+            flex-direction: column
+        }
+
+
+
+        .main-button a {
+            font-size: 14px;
+            color: #fff;
+            background-color: #e75e8d;
+            padding: 12px 30px;
+            display: inline-block;
+            border-radius: 25px;
+            font-weight: 400;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        }
+
+        .main-button a:hover {
+            background-color: #fff;
+            color: #e75e8d;
+        }
+
+        .feature-banner .main-button {
+            text-align: center;
+            margin-bottom: -87px;
+        }
+
+        a {
+            color: #ec6090;
+            text-decoration: none !important;
+        }
+
+            a:hover {
+                color: white;
+                text-decoration: none !important;
+            }
+    </style>
+</body>
+</html>
+<script>
+    <script src="~/js/script.js" ></script>
+</script>

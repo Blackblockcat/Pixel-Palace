@@ -1,0 +1,152 @@
+﻿@model dynamic
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Pixel Palace</title>
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="~/assets/css/owl.css">
+    <link rel="stylesheet" href="~/assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+</head>
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <a href="index.html" class="logo">
+                            <img src="~/assets/images/logo.jpeg" alt="" style="width:80px; border-radius:30%; margin-left:80px;">
+                        </a>
+                        <div class="search-input">
+                            <form id="search" action="#">
+                                <input id="searchid" onchange="search()" type="text" placeholder="Enter keywords ..." required>
+                                <i class="fa fa-search"></i>
+                            </form>
+                        </div>
+                        @functions {
+                            string isActive(string controller, string action)
+                            {
+                                var currentPage = ViewContext.RouteData.Values["controller"].ToString() + ViewContext.RouteData.Values["action"].ToString();
+                                return currentPage.Equals(controller + action, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+                            }
+                        }
+                        <ul class="nav">
+                            <li>
+                                <a href="@Url.Action("Index", "Home")" class="@isActive("Home", "Index")">Home</a>
+                            </li>
+                            <li class="nk-drop-item">
+                                <a class="@isActive("Games", "Games")">Categories</a>
+                                <ul class="dropdowncs">
+                                    @{
+                                        if (Model != null && Model.GetType().GetProperty("Categories") != null)
+                                        {
+                                            var categories = Model.Categories as IEnumerable<dynamic>;
+                                            if (categories != null)
+                                            {
+                                                foreach (var category in categories)
+                                                {
+                                                    <li><a href="@Url.Action("Games", "Games", new { Cid = category.Id })">@category.Type</a></li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No categories available</li>
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                            <li><a href="details.html">Details</a></li>
+                            <li><a href="streams.html">Streams</a></li>
+                            <li><a href="~/users/profile">Profile <img src="~/assets/images/profile-header.jpg" alt=""></a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <style>
+        .dropdowncs {
+            display: none;
+            position: absolute;
+            background-color: #272929;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdowncs a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdowncs a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .nk-drop-item:hover .dropdowncs {
+            display: block;
+        }
+    </style>
+    <div class="container">
+        <main role="main" id="partialViewContainer" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+                        <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/owl-carousel.js"></script>
+    <script src="~/assets/js/tabs.js"></script>
+    <script src="~/assets/js/popup.js"></script>
+    <script src="~/assets/js/custom.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/goodgames.js"></script>
+    <script src="~/js/goodgames.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".nk-drop-item").hover(function () {
+                $(this).find(".dropdown").show();
+            }, function () {
+                $(this).find(".dropdown").hide();
+            });
+        });
+
+        function search() {
+            var query = $('#searchid').val();
+            $.ajax({
+                url: `/Home/search?query=${query}`,
+                type: "Get",
+                success: function (response) {
+                    $("#partialViewContainer").html(response);
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

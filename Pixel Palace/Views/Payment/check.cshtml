@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif!important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #DFDBE5;
+            background-image: url("https://wallpaperaccess.com/full/3063067.png");
+            color: #963E7B;
+        }
+
+        .mainscreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            width: 60rem;
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 4px 3px 20px #3535358c;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .leftside {
+            background: #030303;
+            width: 25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product {
+            object-fit: cover;
+            width: 20em;
+            height: 20em;
+            border-radius: 100%;
+        }
+
+        .rightside {
+            background-color: #ffffff;
+            width: 35rem;
+            padding: 2rem;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        p {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: .8rem 0;
+        }
+
+        .inputbox {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-bottom: 1.5px solid #ccc;
+            margin-bottom: 0.5rem;
+            border-radius: 0.3rem;
+            font-family: 'Roboto', sans-serif;
+            color: #615a5a;
+            font-size: 1.1rem;
+            font-weight: 500;
+            outline: none;
+        }
+
+        .expcvv {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 0.6rem;
+        }
+
+        .expcvv_text, .expcvv_text2 {
+            padding: 0 1rem;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #753370 0%, #298096 100%);
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 400;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            width: 100%;
+            letter-spacing: .11rem;
+            outline: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 3px 3px 6px #38373785;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        @@media only screen and (max-width: 1000px) {
+            .card {
+                flex-direction: column;
+                width: auto;
+            }
+
+            .leftside, .rightside {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .leftside {
+                border-bottom-left-radius: 0;
+            }
+
+            .rightside {
+                padding: 1rem 2rem 2rem 2rem;
+                border-bottom-left-radius: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mainscreen">
+        <div class="card">
+            <div class="leftside">
+                <img src="https://i.pinimg.com/originals/18/9d/dc/189ddc1221d9c1c779dda4ad37a35fa1.png" class="product" alt="Shoes" />
+            </div>
+            <div class="rightside">
+                <form id="paymentForm" action="/payment/check" method="POST">
+                    <h1>CheckOut</h1>
+                    <h2>Payment Information</h2>
+                    <p>Cardholder Name</p>
+                    <input type="text" class="inputbox" name="name" id="name" required />
+                    <div id="nameError" class="error"></div>
+                    <p>Card Number</p>
+                    <input type="text" class="inputbox" name="card_number" id="card_number" required />
+                    <div id="cardNumberError" class="error"></div>
+                    <p>Card Type</p>
+                    <select class="inputbox" name="card_type" id="card_type" required>
+                        <option value="">--Select a Card Type--</option>
+                        <option value="Visa">Visa</option>
+                        <option value="RuPay">RuPay</option>
+                        <option value="MasterCard">MasterCard</option>
+                    </select>
+                    <div id="cardTypeError" class="error"></div>
+                    <div class="expcvv">
+                        <div>
+                            <p class="expcvv_text">Expiry</p>
+                            <input type="month" class="inputbox" name="exp_date" id="exp_date" required />
+                            <div id="expDateError" class="error"></div>
+                        </div>
+                        <div>
+                            <p class="expcvv_text2">CVV</p>
+                            <input type="text" class="inputbox" name="cvv" id="cvv" required />
+                            <div id="cvvError" class="error"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="button">CheckOut</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Clear previous error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('cardNumberError').textContent = '';
+            document.getElementById('cardTypeError').textContent = '';
+            document.getElementById('expDateError').textContent = '';
+            document.getElementById('cvvError').textContent = '';
+
+            let hasErrors = false;
+
+            // Validate Cardholder Name
+            let name = document.getElementById('name').value.trim();
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Cardholder name is required.';
+                hasErrors = true;
+            }
+
+            // Validate Card Number
+            let cardNumber = document.getElementById('card_number').value.trim();
+            if (!/^\d{16}$/.test(cardNumber)) {
+                document.getElementById('cardNumberError').textContent = 'Card number must be 16 digits.';
+                hasErrors = true;
+            }
+
+            // Validate Card Type
+            let cardType = document.getElementById('card_type').value;
+            if (cardType === '') {
+                document.getElementById('cardTypeError').textContent = 'Please select a card type.';
+                hasErrors = true;
+            }
+
+            // Validate Expiry Date
+            let expDate = document.getElementById('exp_date').value;
+            if (expDate === '') {
+                document.getElementById('expDateError').textContent = 'Expiry date is required.';
+                hasErrors = true;
+            } else {
+                let today = new Date();
+                let [expYear, expMonth] = expDate.split('-');
+                let expiryDate = new Date(expYear, expMonth - 1);
+                if (expiryDate < today) {
+                    document.getElementById('expDateError').textContent = 'Expiry date must be in the future.';
+                    hasErrors = true;
+                }
+            }
+
+            // Validate CVV
+            let cvv = document.getElementById('cvv').value.trim();
+            if (!/^\d{3}$/.test(cvv)) {
+                document.getElementById('cvvError').textContent = 'CVV must be 3 digits.';
+                hasErrors = true;
+            }
+
+            // If no errors, submit the form
+            if (!hasErrors) {
+                // Remove the event listener to allow form submission
+                document.getElementById('paymentForm').removeEventListener('submit', arguments.callee);
+                // Submit the form
+                document.getElementById('paymentForm').submit();
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Details";
+}
+@*
+<h1>Details</h1>
+
+<div>
+    <h4>Games</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Os_mode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Os_mode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Total_rating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Total_rating)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Average_rating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Average_rating)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game_Images)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game_Images)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Cyborg - Awesome HTML5 Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/assets/css/templatemo-cyborg-gaming.css">
+    <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <!--
+
+    TemplateMo 579 Cyborg Gaming
+
+    https://templatemo.com/tm-579-cyborg-gaming
+
+    -->
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+
+                    <!-- ***** Featured Start ***** -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="feature-banner header-text">
+                                <div class="row">
+                                    <div class="col-lg-4">
+
+                                        @{
+                                            var base64 = Convert.ToBase64String(Model.game.Game_Images);
+                                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                        }
+                                        <img src="@imgsrc" style="max-width: 100%; max-height: 170px" alt="" />
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <br />
+                                        <br />
+                                        <h5>Describtion</h5>
+                                        <h5 style="font-weight:400;  ">  @Model.game.description </h5>
+                                        <br />
+                                        <h5 style="font-weight:400; ">   Os Modes : @Model.game.Os_mode    </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ***** Featured End ***** -->
+                    <!-- ***** Details Start ***** -->
+                    <div class="game-details">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2>@Model.game.name Details</h2>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="left-info">
+                                                <div class="left">
+                                                    <h4>@Model.game.name</h4>
+                                                    <span>@Model.game.Category.Type</span>
+                                                </div>
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i> @Model.game.Average_rating</li>
+                                                    <li><i class="fa fa-download"></i>@Model.game.price$</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="right-info">
+                                                <ul>
+                                                    <li><i class="fa fa-star"></i>@Model.game.Average_rating</li>
+                                                    <li><i class="fa fa-download"></i> 2.3M</li>
+                                                    <li><i class="fa fa-server"></i> 36GB</li>
+                                                    <li><i class="fa fa-gamepad"></i> Action</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        @*    <div class="col-lg-4">
+                                        <img src="assets/images/details-01.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                                        </div>
+                                        <div class="col-lg-4">
+                                        <img src="assets/images/details-02.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                                        </div>
+                                        <div class="col-lg-4">
+                                        <img src="assets/images/details-03.jpg" alt="" style="border-radius: 23px; margin-bottom: 30px;">
+                                        </div>
+                                        <div class="col-lg-12">
+                                        <p>Cyborg Gaming is free HTML CSS website template provided by TemplateMo. This is Bootstrap v5.2.0 layout. You can make a <a href="https://paypal.me/templatemo" target="_blank">small contribution via PayPal</a> to info [at] templatemo.com and thank you for supporting. If you want to get the PSD source files, please contact us. Lorem ipsum dolor sit consectetur es dispic dipiscingei elit, sed doers eiusmod lisum hored tempor.</p>
+                                        </div> *@
+                                        <div class="col-lg-12">
+                                            <div class="main-border-button">
+                                                <a href="@Url.Action("create","Carts" , new{ gameid = Model.game.id})">Add to cart </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ***** Details End ***** -->
+                    <!-- ***** Other Start ***** -->
+                    <div class="other-games">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="heading-section">
+                                    <h4><em>Other Related</em> Games</h4>
+                                </div>
+                            </div>
+
+                            @foreach (var game in Model.Relatedgames)
+                            {
+
+
+                                <div class="col-lg-6">
+                                    <a href="@Url.Action("Details","Games" , new{ id = game.id})">
+
+                                        <div class="item">
+                                            @{
+                                                var base66 = Convert.ToBase64String(game.Game_Images);
+                                                var imgsr = string.Format("data:image/jpg;base64,{0}", base66);
+                                            }
+                                            <img src="@imgsr" style=" max-width: 39%; max-height: 170px" alt="" />
+
+
+                                            <h4>@game.name <br><span>@game.Category.Type</span></h4>
+                                            <ul>
+                                                <li><i class="fa fa-star"></i>@game.Average_rating</li>
+                                                <li>@* <i class="fa fa-download"> </i>*@ @game.price$</li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                    <!-- ***** Other End ***** -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/assets/js/isotope.min.js"></script>
+    <script src="/assets/js/owl-carousel.js"></script>
+    <script src="/assets/js/tabs.js"></script>
+    <script src="/assets/js/popup.js"></script>
+    <script src="/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>
