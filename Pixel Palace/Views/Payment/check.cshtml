@@ -7,8 +7,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background:url('/images/cover.jpg');
             background-color: #DFDBE5;
-            background-image: url("https://wallpaperaccess.com/full/3063067.png");
             color: #963E7B;
         }
 
@@ -124,6 +124,7 @@
 
             .leftside {
                 border-bottom-left-radius: 0;
+                background-color: rgba(255, 255, 255, 0.5) !important; /* White background with 50% transparency */
             }
 
             .rightside {
@@ -131,13 +132,14 @@
                 border-bottom-left-radius: 1.5rem;
             }
         }
+       
     </style>
 </head>
-<body>
-    <div class="mainscreen">
+<body >
+    <div class="mainscreen" >
         <div class="card">
-            <div class="leftside">
-                <img src="https://i.pinimg.com/originals/18/9d/dc/189ddc1221d9c1c779dda4ad37a35fa1.png" class="product" alt="Shoes" />
+            <div class="leftside" style="background:url('/Images/cover1.png')">
+                <img src="~/Images/cover1.png" class="product" alt="Shoes" />
             </div>
             <div class="rightside">
                 <form id="paymentForm" action="/payment/check" method="POST">
@@ -154,7 +156,7 @@
                         <option value="">--Select a Card Type--</option>
                         <option value="Visa">Visa</option>
                         <option value="RuPay">RuPay</option>
-                        <option value="MasterCard">MasterCard</option>
+                        <option value="MasterCard">MasterCard </option>
                     </select>
                     <div id="cardTypeError" class="error"></div>
                     <div class="expcvv">
